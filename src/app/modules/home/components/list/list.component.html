@@ -1,0 +1,25 @@
+<section [ngClass]="{ loading: !taskList.length }">
+  <ul *ngIf="taskList.length">
+    <li *ngFor="let item of taskList; let i = index">
+      <input type="checkbox" [(ngModel)]="item.checked" />
+      <input
+        type="text"
+        (keyup)="validationInput(item.task, i)"
+        [(ngModel)]="item.task"
+        [ngClass]="{ checked: item.checked }"
+      />
+
+      <button (click)="deleteItemTaskList(i)">
+        <img src="assets/icons/trash.svg" alt="trash icon" />
+      </button>
+    </li>
+  </ul>
+</section>
+
+<app-add-items-input
+  (emitItemTaskList)="setEmitTaskList($event)"
+></app-add-items-input>
+<app-delete-all-button
+  *ngIf="taskList.length"
+  (click)="deleteAllTaskList()"
+></app-delete-all-button>
